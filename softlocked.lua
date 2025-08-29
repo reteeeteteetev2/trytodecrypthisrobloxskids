@@ -1,3 +1,8 @@
+type User = {
+				instance: Player,
+				plan: "Standard" | "Neo"
+}
+
 type Command = {
     aliases: {string},
     run: (args: {any}) -> ()
@@ -10,7 +15,7 @@ local server = game:HttpGet("http://127.0.0.1")
 local enviroment = {
 				Workspace: workspace = game:GetService("Workspace"),
 				Lighting: Lighting = game:GetService("Lighting"),
-				Players: Players = game:GetService("Players"),
+				Players: lPlayers = game:GetService("Players"),
 				ReplicatedStorage: ReplicatedStorage = game:GetService("ReplicatedStorage"),
 
 	   User: Player = Players.LocalPlayer
