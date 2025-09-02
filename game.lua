@@ -1,5 +1,3 @@
-_G.License = "f62095ee-d4d5-4b7a-8528-d00f608e0a65"
-
 type Plan = "Standard" | "Neo" | nil
 type User = {
 	instance: Player,
@@ -736,7 +734,7 @@ local allCommands: Commands = {
 	},
 }
 
-local function findCommand(name: string): Command
+local function findCommand(name: string): Command?
 	for cmdName, cmd in pairs(allCommands) do
 		if cmdName == name then
 			return cmd
