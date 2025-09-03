@@ -62,9 +62,9 @@ end
 
 local notify = function(Text: string)
 	enviroment.StarterGui:SetCore("SendNotification", {
-    	Title = "Softlocked V1.0",
-    	Text = Text,
-    	Duration = 7
+		Title = "Softlocked V1.0",
+		Text = Text,
+		Duration = 7
 	})
 
 	local sound = Instance.new("Sound", enviroment.CoreGui)
@@ -111,63 +111,63 @@ local clip = function()
 end
 
 local Mods = {
-    1969561115, -- SocialCreditTester
-    8336650773, -- LetsParty_Staff
-    51412923,   -- fallen
-    442532766,  -- JDG
-    1060165990, -- pufflecats
-    867772557,  -- bob
-    91716037,   -- anubis
-    107495120,  -- ledrtroll
-    84322362,   -- ohman
-    120957544,  -- zynches
-    77757985,   -- bluedogz
-    75089864,   -- PatrykZPZ
-    127029308,  -- LetsParty_Pro
-    60639506,   -- orinrino
-    110175890,  -- FoxBin
-    4255442393, -- pufflecats alt
-    3353304684, -- pufflecats alt
-    201937123,  -- LetsParty_MOD
-    72433682,   -- masterhalo
-    94360439,   -- DjSquidey
-    201061673,  -- KorZero
-    126105491,  -- Zack_NQuack
-    329063274,  -- Vanitaws
-    118822846,  -- ledrtroll alt
-    2489360616, -- LetsParty_puffle
-    85871775,   -- gamerforeverisangel
-    108679763,  -- masato
-    6268962,    -- Manchenzo
-    161241750,  -- unknown account just in case
-    3360693,    -- fallen alt
-    2037259178, -- fallen alt
-    1418089498, -- fallen alt
+	1969561115, -- SocialCreditTester
+	8336650773, -- LetsParty_Staff
+	51412923,   -- fallen
+	442532766,  -- JDG
+	1060165990, -- pufflecats
+	867772557,  -- bob
+	91716037,   -- anubis
+	107495120,  -- ledrtroll
+	84322362,   -- ohman
+	120957544,  -- zynches
+	77757985,   -- bluedogz
+	75089864,   -- PatrykZPZ
+	127029308,  -- LetsParty_Pro
+	60639506,   -- orinrino
+	110175890,  -- FoxBin
+	4255442393, -- pufflecats alt
+	3353304684, -- pufflecats alt
+	201937123,  -- LetsParty_MOD
+	72433682,   -- masterhalo
+	94360439,   -- DjSquidey
+	201061673,  -- KorZero
+	126105491,  -- Zack_NQuack
+	329063274,  -- Vanitaws
+	118822846,  -- ledrtroll alt
+	2489360616, -- LetsParty_puffle
+	85871775,   -- gamerforeverisangel
+	108679763,  -- masato
+	6268962,    -- Manchenzo
+	161241750,  -- unknown account just in case
+	3360693,    -- fallen alt
+	2037259178, -- fallen alt
+	1418089498, -- fallen alt
 }
 
 local function isMod(userId)
-    for _, id in ipairs(Mods) do
-        if userId == id then
-            return true
-        end
-    end
-    return false
+	for _, id in ipairs(Mods) do
+		if userId == id then
+			return true
+		end
+	end
+	return false
 end
 
 local function checkForMods()
-    for _, player in ipairs(enviroment.Players:GetPlayers()) do
-        if isMod(player.UserId) then
-            notify("⚠️ MOD DETECTED: " .. player.Name)
-        end
-    end
+	for _, player in ipairs(enviroment.Players:GetPlayers()) do
+		if isMod(player.UserId) then
+			notify("⚠️ MOD DETECTED: " .. player.Name)
+		end
+	end
 end
 
 checkForMods()
 
 enviroment.Players.PlayerAdded:Connect(function(player)
-    if isMod(player.UserId) then
-        notify("⚠️ MOD JOINED: " .. player.Name)
-    end
+	if isMod(player.UserId) then
+		notify("⚠️ MOD JOINED: " .. player.Name)
+	end
 end)
 
 local f3x = {}
@@ -205,56 +205,69 @@ local HumanToInternal = {
 }
 
 local function getRemote()
-    local Players = game:GetService("Players")
-    local pl = Players.LocalPlayer
-    local char = pl and (pl.Character or pl.CharacterAdded:Wait())
-    if not char then return nil end
+	local Players = game:GetService("Players")
+	local pl = Players.LocalPlayer
+	local char = pl and (pl.Character or pl.CharacterAdded:Wait())
+	if not char then return nil end
 
-    local function findRemote(folder)
-        if not folder then return nil end
-        local bf = folder:FindFirstChildOfClass("BindableFunction")
-        if bf then
-            local rf = bf:FindFirstChildOfClass("RemoteFunction")
-            if rf then return rf end
-        end
-        for _, v in pairs(folder:GetDescendants()) do
-            if v:IsA("RemoteFunction") then return v end
-        end
-        return nil
-    end
+	local function findRemote(folder)
+		if not folder then return nil end
+		local bf = folder:FindFirstChildOfClass("BindableFunction")
+		if bf then
+			local rf = bf:FindFirstChildOfClass("RemoteFunction")
+			if rf then return rf end
+		end
+		for _, v in pairs(folder:GetDescendants()) do
+			if v:IsA("RemoteFunction") then return v end
+		end
+		return nil
+	end
 
-    local folder = char:FindFirstChild("F3X")
-    local rf = findRemote(folder)
-    if rf then return rf end
+	local folder = char:FindFirstChild("F3X")
+	local rf = findRemote(folder)
+	if rf then return rf end
 
-    local backpack = pl:FindFirstChild("Backpack")
-    if backpack then
-        local tool = backpack:FindFirstChild("F3X")
-        if tool then
-            tool.Parent = char
-            rf = findRemote(tool)
-            if rf then return rf end
-        end
-    end
+	local backpack = pl:FindFirstChild("Backpack")
+	if backpack then
+		local tool = backpack:FindFirstChild("F3X")
+		if tool then
+			tool.Parent = char
+			rf = findRemote(tool)
+			if rf then return rf end
+		end
+	end
 
-    for _, v in pairs(char:GetDescendants()) do
-        if v:IsA("RemoteFunction") then return v end
-    end
+	for _, v in pairs(char:GetDescendants()) do
+		if v:IsA("RemoteFunction") then return v end
+	end
 
-    return nil
+	return nil
 end
 
-local function unequipF3X()
+--[[local function equipF3X()
     local pl = game:GetService("Players").LocalPlayer
     local char = pl and (pl.Character or pl.CharacterAdded:Wait())
     if not char then return end
     local backpack = pl:FindFirstChild("Backpack")
     if not backpack then return end
 
-    local tool = char:FindFirstChild("F3X")
+    local tool = backpack:FindFirstChild("F3X")
     if tool and tool:IsA("Tool") then
-        tool.Parent = backpack
+        tool.Parent = char
     end
+end]]
+
+local function unequipF3X()
+	local pl = game:GetService("Players").LocalPlayer
+	local char = pl and (pl.Character or pl.CharacterAdded:Wait())
+	if not char then return end
+	local backpack = pl:FindFirstChild("Backpack")
+	if not backpack then return end
+
+	local tool = char:FindFirstChild("F3X")
+	if tool and tool:IsA("Tool") then
+		tool.Parent = backpack
+	end
 end
 
 local function shiftString(s, shift)
@@ -458,10 +471,10 @@ local allCommands: Commands = {
 				end
 
 				local function hasF3X()
-    				if Backpack:FindFirstChild("F3X") or char:FindFirstChild("F3X") then
-   			     		return true
-    				end
-    				return false
+					if Backpack:FindFirstChild("F3X") or char:FindFirstChild("F3X") then
+						return true
+					end
+					return false
 				end
 
 
@@ -655,33 +668,35 @@ local allCommands: Commands = {
 			if not hrp then return end
 
 			if input:lower() == "all" then
-            for _, player in pairs(game:GetService("Players"):GetPlayers()) do
-                if player ~= plr and player.Character then
-                    local torso = player.Character:FindFirstChild("Torso")
-                    if torso and torso:FindFirstChild("Neck") then
-                        f3x.Remove({torso.Neck})
-                    end
-                end
-            end
-        else
-            local targetPlayer
-            local search = input:lower()
-            for _, player in pairs(game:GetService("Players"):GetPlayers()) do
-                local username = player.Name:lower()
-                local displayName = player.DisplayName:lower()
-                if username:sub(1, #search) == search or displayName:sub(1, #search) == search then
-                    targetPlayer = player
-                    break
-                end
-            end
+				for _, player in pairs(game:GetService("Players"):GetPlayers()) do
+					if player ~= plr and player.Character then
+						for meow, thang in pairs(player.Character:GetDescendants()) do
+							if thang.Name == "Neck" then
+								f3x.Remove({torso.Neck})
+							end
+						end
+					end
+				end
+			else
+				local targetPlayer
+				local search = input:lower()
+				for _, player in pairs(game:GetService("Players"):GetPlayers()) do
+					local username = player.Name:lower()
+					local displayName = player.DisplayName:lower()
+					if username:sub(1, #search) == search or displayName:sub(1, #search) == search then
+						targetPlayer = player
+						break
+					end
+				end
 
-            if targetPlayer and targetPlayer.Character then
-                local torso = targetPlayer.Character:FindFirstChild("Torso")
-                if torso and torso:FindFirstChild("Neck") then
-                    f3x.Remove({torso.Neck})
-                end
-            end
-        end
+				if targetPlayer and targetPlayer.Character then
+					for meow, thang in pairs(targetPlayer.Character:GetDescendants()) do
+						if thang.Name == "Neck" then
+							f3x.Remove({torso.Neck})
+						end
+					end
+				end
+			end
 
 			unequipF3X()
 		end,
@@ -733,6 +748,13 @@ local allCommands: Commands = {
 		end, 
 	},
 }
+
+for cmdName, cmdData in pairs(allCommands) do
+	local description = cmdData.description or "No description"
+	local requiredPlan = cmdData.requiredPlan or "None"
+	print(cmdName .. "/n - " .. description .. "/n - " .. requiredPlan)
+end
+
 
 local function findCommand(name: string): Command?
 	for cmdName, cmd in pairs(allCommands) do
@@ -936,7 +958,13 @@ local function hideUI()
 	TextBox.Text = ""
 end
 
-
+plr.Chatted:Connect(function(msg)
+	if not open then
+		showUI()
+	else
+		hideUI()
+	end
+end)
 
 UserInputService.InputBegan:Connect(function(input, gpe)
 	if gpe then
